@@ -8,10 +8,11 @@ interface ICreateTagModal {
 }
 const CreateTagModal = ({ handleClose }: ICreateTagModal) => {
   const [form] = Form.useForm();
+  const [api, contextHolder] = notification.useNotification();
   const handleSubmit = async (v: any) => {
     console.log(v);
     try {
-      const rs = await createTag({
+      await createTag({
         tags: [
           {
             tag_name: v.name,
@@ -22,13 +23,13 @@ const CreateTagModal = ({ handleClose }: ICreateTagModal) => {
       api.success({
         message: "Create tag succeed",
       });
+      handleClose();
     } catch (e) {
       api.error({
         message: "Create tag failed",
       });
     }
-  };
-  const [api, contextHolder] = notification.useNotification();
+  }
 
   return (
     <>
